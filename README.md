@@ -1,0 +1,2 @@
+# MogDiary
+simple diary
