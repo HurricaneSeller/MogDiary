@@ -24,7 +24,7 @@
 
         <TextView
             andorid:id="@+id/showing_diary_content_clipping"
-            andorid:layout_width="match_parent"
+            andorid:layout_width="250dp"
             andorid:layout_height="18dp"
             andorid:layout_below="@id/showing_diary_title"
             andorid:textColor="@color/colorPrimaryDark"

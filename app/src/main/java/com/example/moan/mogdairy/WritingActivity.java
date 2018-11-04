@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class WritingActivity extends BaseActivity {
     private TextView dailyLocationView;
     private TextView dailyQuoteView;
     //TODO
+
 
     private int diaryId;
     private boolean visiableCard = false;
@@ -158,7 +160,6 @@ public class WritingActivity extends BaseActivity {
         musicStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (musicFlag == isPlaying) {
                     Intent stopMusicIntent = new Intent(WritingActivity.this, MusicService.class);
                     stopService(stopMusicIntent);
