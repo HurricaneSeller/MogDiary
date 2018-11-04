@@ -21,45 +21,4 @@ public class RingReceiver extends BroadcastReceiver {
                 true,
                 5);
     }
-
-
-
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            String ChannelId = "CLOCK";
-//            String ChannelName = "clock info";
-//            int importance = NotificationManager.IMPORTANCE_HIGH;
-//            createNotificationChannel(context, false, false, false, ChannelId, ChannelName, importance);
-//        }
-//        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-//        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "CLOCK");
-//        Notification notification = builder
-//                .setContentTitle("Time up !")
-//                .setContentText(intent.getStringExtra("clock_title"))
-//                .setSmallIcon(R.mipmap.alert)
-//                .setAutoCancel(true)
-//                .build();
-//        notificationManager.notify(5, notification);
-
-    //the former "}" located here.
-
-
-//    @TargetApi(Build.VERSION_CODES.O)
-//    public void createNotificationChannel(Context context,
-//                                          boolean isVibrate,
-//                                          boolean hasSound,
-//                                          boolean allowLighted,
-//                                          String ChannelId,
-//                                          String ChannelName,
-//                                          int importance) {
-//        NotificationChannel notificationChannel = new NotificationChannel(ChannelId, ChannelName, importance);
-//        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-//        notificationChannel.enableVibration(isVibrate);
-//        notificationChannel.enableLights(allowLighted);
-//        if (!hasSound) {
-//            notificationChannel.setSound(null, null);
-//        }
-//        if (notificationManager != null) {
-//            notificationManager.createNotificationChannel(notificationChannel);
-//        }
-//    }
 }

@@ -30,12 +30,13 @@
 
             <TextView
                 android:id="@+id/daily_quote"
-                android:layout_width="wrap_content"
+                android:layout_width="250dp"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
-                android:maxLength="28"
                 android:textColor="#fff"
                 android:textSize="18sp"
-                tools:text="Write something hereeeeeeeeeeeeeeeeeee" />
+                android:text="        意图生存，而太悲怯，就得死亡.
+                ——鲁迅。" />
 
             <TextView
                 android:id="@+id/daily_temperature"

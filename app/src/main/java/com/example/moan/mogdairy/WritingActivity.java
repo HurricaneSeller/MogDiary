@@ -251,7 +251,7 @@ public class WritingActivity extends BaseActivity {
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         final Calendar calendar = Calendar.getInstance();
 
-        int mHour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int mHour = calendar.get(Calendar.HOUR_OF_DAY);
         int mMinute = calendar.get(Calendar.MINUTE);
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(WritingActivity.this, new TimePickerDialog.OnTimeSetListener() {
@@ -264,6 +264,9 @@ public class WritingActivity extends BaseActivity {
                 Intent intent = new Intent(WritingActivity.this, RingReceiver.class);
                 intent.putExtra("clock_title", diaryTitle.getText().toString());
                 intent.putExtra("clock_content", diaryContent.getText().toString());
+
+                Toast.makeText(WritingActivity.this, "the clock will ring at " +
+                                hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(WritingActivity.this, 0, intent, 0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, anotherCanlendar.getTimeInMillis(), pendingIntent);
