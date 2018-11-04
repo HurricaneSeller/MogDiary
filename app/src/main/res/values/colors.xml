@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="main_menu_normal">#3cb371</color>
+    <color name="main_menu_pressed">#2e8b57</color>
+    <color name="normal">#3d9f69</color>
+    <color name="press">#7ece84</color>
+
+</resources>

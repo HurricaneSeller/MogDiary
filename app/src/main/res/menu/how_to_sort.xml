@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/sort_by_dictionary"
+        android:orderInCategory="50"
+        android:title="dictionary order"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/sort_by_date"
+        android:orderInCategory="50"
+        android:title="date order"
+        app:showAsAction="never"/>
+
+
+
+</menu>

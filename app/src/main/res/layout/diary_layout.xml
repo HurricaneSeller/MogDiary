@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:andorid="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    andorid:layout_width="match_parent"
+    andorid:layout_height="100dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    andorid:orientation="horizontal"
+    app:cardBackgroundColor="#f0fff0"
+    app:cardCornerRadius="30sp"
+    app:contentPadding="20dp">
+
+    <RelativeLayout
+        andorid:layout_width="280dp"
+        andorid:layout_height="match_parent">
+
+        <TextView
+            andorid:id="@+id/showing_diary_title"
+            andorid:layout_width="250dp"
+            tools:text="很多哦开发健康撒娇发；老师凤凰城解决；参考刘德华va；参加爱吃；的时间"
+            andorid:layout_height="40dp"
+            andorid:layout_alignParentTop="true"
+            andorid:textColor="@color/colorPrimaryDark"
+            andorid:textSize="20dp" />
+
+        <TextView
+            andorid:id="@+id/showing_diary_content_clipping"
+            andorid:layout_width="match_parent"
+            andorid:layout_height="18dp"
+            andorid:layout_below="@id/showing_diary_title"
+            andorid:textColor="@color/colorPrimaryDark"
+            andorid:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        andorid:id="@+id/showing_diary_date"
+        andorid:layout_width="60dp"
+        andorid:layout_height="60dp"
+        tools:text="sssssss"
+        andorid:layout_gravity="right|center"
+        andorid:gravity="center"
+        andorid:textSize="20dp" />
+</android.support.v7.widget.CardView>

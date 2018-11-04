@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_info"
+            android:title="Infomation" />
+        <!--android:icon="@drawable/customerservice"-->
+        <item
+            android:id="@+id/nav_location"
+            android:title="Location" />
+        <item
+            android:id="@+id/nav_task"
+            android:title="Task" />
+    </group>
+    <item android:title="Sort">
+        <menu>
+            <item
+                android:id="@+id/nav_sort_by_dictonary"
+                android:title="by dictonary" />
+            <item
+                android:id="@+id/nav_sort_by_date"
+                android:title="by date" />
+        </menu>
+    </item>
+    <!--</menu>-->
+</menu>
+
