@@ -10,6 +10,8 @@ public class Diary extends LitePalSupport implements Serializable {
     private String title;
     private String content;
     private Date date;
+    private boolean hasClock;
+    private String priority;
 
     public boolean isHasClock() {
         return hasClock;
@@ -19,7 +21,13 @@ public class Diary extends LitePalSupport implements Serializable {
         this.hasClock = hasClock;
     }
 
-    private boolean hasClock;
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
 
     public int getId() {
         return Id;

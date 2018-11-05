@@ -13,7 +13,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.moan.mogdairy.gson.Weather;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.gson.Gson;
@@ -33,10 +33,11 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
-import gson.Weather;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+import static com.example.moan.mogdairy.R.string.priority;
 
 
 public class WritingActivity extends BaseActivity {
@@ -51,6 +52,7 @@ public class WritingActivity extends BaseActivity {
     private TextView dailyQuoteView;
     //TODO
 
+    private String priority;
 
     private int diaryId;
     private boolean visiableCard = false;
@@ -71,18 +73,12 @@ public class WritingActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        diaryTitle = (EditText) findViewById(R.id.writing_diary_title);
-        diaryContent = (EditText) findViewById(R.id.writing_diary_content);
-        dailyBriefView = (TextView) findViewById(R.id.daily_brief);
-        dailyTemperatureView = (TextView) findViewById(R.id.daily_temperature);
-        dailyLocationView = (TextView) findViewById(R.id.daily_location);
-        dailyPicView = (ImageView) findViewById(R.id.daily_pic);
-        dailyQuoteView = (TextView) findViewById(R.id.daily_quote);
-        cardView = (CardView) findViewById(R.id.card_view);
+        initView();
 
         //get data
         final Intent intent = getIntent();
         final int where = intent.getIntExtra("where", 0);
+        priority = intent.getStringExtra("priority");
         if (where == DiaryAdapter.WHERE) {
             Diary diary = (Diary) intent.getSerializableExtra("diaryGotten");
             diaryTitle.setText(diary.getTitle());
@@ -90,17 +86,16 @@ public class WritingActivity extends BaseActivity {
             diaryId = diary.getId();
         }
 
-
         //TODO
         //let the main & music more flexible
-        final FloatingActionMenu main = (FloatingActionMenu) findViewById(R.id.floating_main);
-        final FloatingActionMenu music = (FloatingActionMenu) findViewById(R.id.floating_music);
-        final FloatingActionButton save = (FloatingActionButton) findViewById(R.id.floating_save);
-        final FloatingActionButton back = (FloatingActionButton) findViewById(R.id.floating_back);
-        final FloatingActionButton clock = (FloatingActionButton) findViewById(R.id.floating_clock);
-        final FloatingActionButton cloud = (FloatingActionButton) findViewById(R.id.floating_cloud);
-        final FloatingActionButton musicStart = (FloatingActionButton) findViewById(R.id.floating_start);
-        final FloatingActionButton musicStop = (FloatingActionButton) findViewById(R.id.floating_stop);
+        final FloatingActionMenu main = findViewById(R.id.floating_main);
+        final FloatingActionMenu music = findViewById(R.id.floating_music);
+        final FloatingActionButton save = findViewById(R.id.floating_save);
+        final FloatingActionButton back = findViewById(R.id.floating_back);
+        final FloatingActionButton clock = findViewById(R.id.floating_clock);
+        final FloatingActionButton cloud = findViewById(R.id.floating_cloud);
+        final FloatingActionButton musicStart = findViewById(R.id.floating_start);
+        final FloatingActionButton musicStop = findViewById(R.id.floating_stop);
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +167,25 @@ public class WritingActivity extends BaseActivity {
             }
         });
     }
+
+    private void getDeadline() {
+        // TODO: 11/4/18  make a scroll choose window
+        AlertDialog.Builder builder = new AlertDialog.Builder(WritingActivity.this);
+    }
+
+
+    private void initView() {
+        diaryTitle = findViewById(R.id.writing_diary_title);
+        diaryContent = findViewById(R.id.writing_diary_content);
+        dailyBriefView = findViewById(R.id.daily_brief);
+        dailyTemperatureView = findViewById(R.id.daily_temperature);
+        dailyLocationView = findViewById(R.id.daily_location);
+        dailyPicView = findViewById(R.id.daily_pic);
+        dailyQuoteView = findViewById(R.id.daily_quote);
+        cardView = findViewById(R.id.card_view);
+
+    }
+
 
     private void getCloudInfo() {
         //get localposition automaticlly
@@ -267,7 +281,7 @@ public class WritingActivity extends BaseActivity {
                 intent.putExtra("clock_content", diaryContent.getText().toString());
 
                 Toast.makeText(WritingActivity.this, "the clock will ring at " +
-                                hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
+                        hourOfDay + ":" + minute, Toast.LENGTH_SHORT).show();
 
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(WritingActivity.this, 0, intent, 0);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, anotherCanlendar.getTimeInMillis(), pendingIntent);
@@ -309,7 +323,7 @@ public class WritingActivity extends BaseActivity {
         Diary diary = new Diary();
         diary.setTitle(diarytitle);
         diary.setContent(diarycontent);
-
+        diary.setPriority(priority);
         Date date = new Date();
         diary.setDate(date);
 

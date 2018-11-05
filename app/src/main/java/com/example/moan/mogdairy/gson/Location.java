@@ -1,4 +1,4 @@
-package gson;
+package com.example.moan.mogdairy.gson;
 
 import com.google.gson.annotations.SerializedName;
 

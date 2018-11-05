@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <litepal>
     <dbname value="mogDiaries" />
-    <version value="7" />
+    <version value="9" />
     <list>
         <mapping class="com.example.moan.mogdairy.Diary" />
     </list>

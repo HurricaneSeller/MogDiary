@@ -7,7 +7,7 @@
     andorid:orientation="horizontal"
     app:cardBackgroundColor="#f0fff0"
     app:cardCornerRadius="30sp"
-    app:contentPadding="20dp">
+    app:contentPadding="10dp">
 
     <RelativeLayout
         andorid:layout_width="280dp"
@@ -16,8 +16,10 @@
         <TextView
             andorid:id="@+id/showing_diary_title"
             andorid:layout_width="250dp"
+            andorid:layout_alignParentRight="true"
             tools:text="很多哦开发健康撒娇发；老师凤凰城解决；参考刘德华va；参加爱吃；的时间"
-            andorid:layout_height="40dp"
+            andorid:layout_height="50dp"
+            andorid:ellipsize="end"
             andorid:layout_alignParentTop="true"
             andorid:textColor="@color/colorPrimaryDark"
             andorid:textSize="20dp" />
@@ -25,18 +27,31 @@
         <TextView
             andorid:id="@+id/showing_diary_content_clipping"
             andorid:layout_width="250dp"
-            andorid:layout_height="18dp"
+            andorid:layout_alignParentRight="true"
+            andorid:ellipsize="end"
+            tools:text="快来是的骄傲了符合撒了卡；发哈了附近；偶"
+            andorid:layout_height="20dp"
             andorid:layout_below="@id/showing_diary_title"
             andorid:textColor="@color/colorPrimaryDark"
             andorid:textSize="15dp" />
-
+        <Button
+            andorid:id="@+id/showing_diary_priority"
+            andorid:layout_centerVertical="true"
+            andorid:background="@drawable/rec"
+            andorid:layout_alignParentLeft="true"
+            andorid:layout_width="25dp"
+            andorid:text="5"
+            andorid:gravity="center"
+            andorid:textStyle="bold"
+            andorid:textSize="18dp"
+            andorid:layout_height="25dp" />
     </RelativeLayout>
 
     <TextView
-        andorid:id="@+id/showing_diary_date"
+        andorid:id="@+id/showing_diary_deadline"
         andorid:layout_width="60dp"
         andorid:layout_height="60dp"
-        tools:text="sssssss"
+        tools:text="22222222"
         andorid:layout_gravity="right|center"
         andorid:gravity="center"
         andorid:textSize="20dp" />

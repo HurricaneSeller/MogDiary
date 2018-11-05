@@ -13,16 +13,20 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.wx.wheelview.widget.WheelViewDialog;
 
 import org.litepal.LitePal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -63,20 +67,19 @@ public class MainActivity extends BaseActivity {
         //make it can be dragged
 
 
-        final FloatingActionButton createDiary = (FloatingActionButton) findViewById(R.id.create_diary);
+        final FloatingActionButton createDiary = findViewById(R.id.create_diary);
 
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
+        drawerLayout = findViewById(R.id.drawerlayout);
 
         diaryList = LitePal.findAll(Diary.class);
-        recyclerView = (RecyclerView) findViewById(R.id.total);
+        recyclerView = findViewById(R.id.total);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         diaryAdapter = new DiaryAdapter(diaryList);
         recyclerView.setAdapter(diaryAdapter);
         recyclerView.addItemDecoration(new SpaceItemDecration(space));
 
 
-        navigationView = (NavigationView) findViewById(R.id.nav);
+        navigationView = findViewById(R.id.nav);
         navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -86,7 +89,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         View headView = navigationView.inflateHeaderView(R.layout.nav_header);
-        CircleImageView profile = (CircleImageView) headView.findViewById(R.id.user_profile);
+        CircleImageView profile = headView.findViewById(R.id.user_profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,9 +101,9 @@ public class MainActivity extends BaseActivity {
         createDiary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WritingActivity.class);
-                intent.putExtra("where", WHERE);
-                startActivity(intent);
+                // TODO: 11/5/18 make a wheelview to get ddl and priority;
+                choosePriority();
+
             }
         });
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.Callback() {
@@ -121,6 +124,7 @@ public class MainActivity extends BaseActivity {
                                   @NonNull RecyclerView.ViewHolder viewHolder,
                                   @NonNull RecyclerView.ViewHolder viewHolder1) {
                 //disable dragging so I do nothing
+
                 return false;
             }
 
@@ -144,9 +148,34 @@ public class MainActivity extends BaseActivity {
             }
         });
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
     }
 
+    private void choosePriority() {
+        final WheelViewDialog choosePriorityDialog = new WheelViewDialog(MainActivity.this);
+        choosePriorityDialog.setCount(1)
+                .setItems(createNumbers())
+                .setTitle("choose priority")
+                .setButtonText("ok")
+                .setLoop(true)
+                .setOnDialogItemClickListener(new WheelViewDialog.OnDialogItemClickListener() {
+                    @Override
+                    public void onItemClick(int position, String s) {
+                        Intent intent = new Intent(MainActivity.this, WritingActivity.class);
+                        intent.putExtra("where", WHERE);
+                        intent.putExtra("priority", s);
+                        startActivity(intent);
+                    }
+                })
+                .show();
+    }
+
+    private ArrayList<String> createNumbers() {
+        ArrayList<String> nums = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            nums.add(String.valueOf(i));
+        }
+        return nums;
+    }
 //    private void setProfile() {
 //        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.
 //                WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -193,6 +222,14 @@ public class MainActivity extends BaseActivity {
                 break;
         }
 
+    }
+
+    private void sortByPriority() {
+        // TODO: 11/5/18 make it
+    }
+
+    private void sortByDeadline() {
+        // TODO: 11/5/18 make it
     }
 
     private void sortByDictionary() {
