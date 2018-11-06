@@ -3,7 +3,6 @@ package com.example.moan.mogdairy;
 import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Diary extends LitePalSupport implements Serializable {
     private int Id;
@@ -11,42 +10,52 @@ public class Diary extends LitePalSupport implements Serializable {
     private String content;
     private boolean hasClock;
     private String priority;
-    private String hour;
-    private String minute;
-    private String day;
-    private String month;
+    private int hour;
+    private int minute;
+    private int day;
+    private int month;
+    private long total;
 
-    public String getMonth() {
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
+
+    public int getMonth() {
         return month;
     }
 
-    public void setMonth(String month) {
+    public void setMonth(int month) {
         this.month = month;
     }
 
 
-    public String getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(String day) {
+    public void setDay(int day) {
         this.day = day;
     }
 
 
-    public String getHour() {
+    public int getHour() {
         return hour;
     }
 
-    public void setHour(String hour) {
+    public void setHour(int hour) {
         this.hour = hour;
     }
 
-    public String getMinute() {
+    public int getMinute() {
         return minute;
     }
 
-    public void setMinute(String minute) {
+    public void setMinute(int minute) {
         this.minute = minute;
     }
 

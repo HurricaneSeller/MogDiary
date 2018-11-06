@@ -315,7 +315,6 @@ public class WritingActivity extends BaseActivity {
         Intent clockIntent = new Intent(WritingActivity.this, RingReceiver.class);
         PendingIntent pendingClockIntent = PendingIntent.getBroadcast(WritingActivity.this,
                 0, clockIntent, 0);
-        // TODO: 11/6/18 create time ;
 
         Calendar clockCalendar = Calendar.getInstance();
         clockCalendar.set(Calendar.MONTH, month - 1);
@@ -460,10 +459,11 @@ public class WritingActivity extends BaseActivity {
         Log.d("moanbigking", String.valueOf(hasClock));
         if (hasClock) {
             Log.d("moanbigking", "here");
-            diary.setMonth(String.valueOf(month));
-            diary.setDay(String.valueOf(day));
-            diary.setHour(String.valueOf(hour));
-            diary.setMinute(String.valueOf(minute));
+            diary.setMonth(month);
+            diary.setDay(day);
+            diary.setHour(hour);
+            diary.setMinute(minute);
+            diary.setTotal(month*43200+day*1440+hour*60+minute);
         }
         diary.save();
     }

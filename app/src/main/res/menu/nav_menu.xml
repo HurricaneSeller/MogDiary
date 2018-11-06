@@ -21,9 +21,6 @@
                 android:id="@+id/nav_sort_by_dictonary"
                 android:title="by dictonary" />
             <item
-                android:id="@+id/nav_sort_by_date"
-                android:title="by date" />
-            <item
                 android:id="@+id/nav_sort_by_priority"
                 android:title="by priority" />
             <item

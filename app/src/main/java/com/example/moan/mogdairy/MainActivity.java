@@ -25,6 +25,7 @@ import com.github.clans.fab.FloatingActionButton;
 import com.wx.wheelview.widget.WheelViewDialog;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -215,10 +216,6 @@ public class MainActivity extends BaseActivity {
                 sortByDictionary();
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 break;
-            case R.id.nav_sort_by_date:
-                sortByDate();
-                drawerLayout.closeDrawer(Gravity.LEFT);
-                break;
             case R.id.nav_sort_by_priority:
                 sortByPriority();
                 drawerLayout.closeDrawer(Gravity.LEFT);
@@ -240,7 +237,7 @@ public class MainActivity extends BaseActivity {
 
     private void sortByDeadline() {
         diaryList.clear();
-        List<Diary> diaries = LitePal.order("day asc").find(Diary.class);
+        List<Diary> diaries = LitePal.order("total asc").find(Diary.class);
         // TODO: 11/6/18 order correctly ;
         diaryList.addAll(diaries);
         diaryAdapter.notifyDataSetChanged();
@@ -253,12 +250,6 @@ public class MainActivity extends BaseActivity {
         diaryAdapter.notifyDataSetChanged();
     }
 
-    private void sortByDate() {
-        diaryList.clear();
-        List<Diary> diaries = LitePal.order("date asc").find(Diary.class);
-        diaryList.addAll(diaries);
-        diaryAdapter.notifyDataSetChanged();
-    }
     private void deleteDiary(int id) {
         LitePal.delete(Diary.class, id);
     }
