@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:andorid="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    andorid:id="@+id/writing_diary_cardview_choose_deadline"
+    andorid:layout_width="match_parent"
+    andorid:layout_height="wrap_content"
+    andorid:backgroundTint="@color/wheelview_background"
+    andorid:visibility="gone"
+    andorid:layout_margin="10dp"
+    app:contentPadding="10dp"
+    tools:visibility="visible"
+    app:cardCornerRadius="40dp">
+
+    <RelativeLayout xmlns:andorid="http://schemas.android.com/apk/res/android"
+        andorid:layout_width="match_parent"
+        andorid:layout_height="wrap_content">
+        <LinearLayout
+            andorid:id="@+id/wheels"
+            andorid:gravity="center_horizontal"
+            andorid:layout_width="match_parent"
+            andorid:layout_height="wrap_content">
+
+            <EditText
+                andorid:id="@+id/month"
+                andorid:layout_width="70dp"
+                andorid:hint="month"
+                andorid:layout_height="wrap_content"
+                andorid:layout_margin="5dp"
+                andorid:textColor="#fff"
+                andorid:gravity="center" />
+
+            <EditText
+                andorid:id="@+id/day"
+                andorid:layout_width="70dp"
+                andorid:hint="day"
+                andorid:layout_height="wrap_content"
+                andorid:layout_margin="5dp"
+                andorid:textColor="#fff"
+                andorid:gravity="center" />
+
+            <EditText
+                andorid:id="@+id/hour"
+                andorid:layout_width="70dp"
+                andorid:layout_height="wrap_content"
+                andorid:hint="hour"
+                andorid:layout_margin="5dp"
+                andorid:textColor="#fff"
+                andorid:gravity="center" />
+
+            <EditText
+                andorid:id="@+id/minute"
+                andorid:layout_width="70dp"
+                andorid:layout_height="wrap_content"
+                andorid:layout_margin="5dp"
+                andorid:textColor="#fff"
+                andorid:hint="minute"
+                andorid:gravity="center" />
+        </LinearLayout>
+
+        <Button
+            andorid:id="@+id/set"
+            andorid:layout_width="40sp"
+            andorid:layout_height="40sp"
+            andorid:layout_below="@+id/wheels"
+            andorid:layout_centerHorizontal="true"
+            andorid:layout_marginTop="10dp"
+            andorid:background="@drawable/clock_writing" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
