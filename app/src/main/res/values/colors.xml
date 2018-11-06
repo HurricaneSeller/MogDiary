@@ -7,5 +7,6 @@
     <color name="main_menu_pressed">#2e8b57</color>
     <color name="normal">#3d9f69</color>
     <color name="press">#7ece84</color>
+    <color name="wheelview_background">#1296db</color>
 
 </resources>

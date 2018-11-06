@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +16,12 @@ import com.wx.wheelview.widget.WheelViewDialog;
 
 import org.litepal.LitePal;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /*
-* with a clock it change background color
-* */
+ * with a clock it change background color
+ * */
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
     private List<Diary> diaryList;
     private Context mContext;
@@ -110,20 +108,14 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         viewHolder.contentClippingView.setText(diary.getContent());
 
 
-
-        // TODO: 11/5/18 make it
-//        if (diary.isHasClock()){
-//            viewHolder.dateView.setText("someting");
-//        }
         viewHolder.priorityButton.setText(diary.getPriority());
 
+        // TODO: 11/6/18 use wheeldialog to make it ;
+        if (diary.isHasClock()) {
+            viewHolder.dateViewFirst.setText(diary.getMonth() + "月" + diary.getDay() + "日");
+            viewHolder.dateViewLast.setText(diary.getHour() + "时" + diary.getMinute() + "分");
+        }
 
-
-        String datewithFilter = diary.getDate().toLocaleString();
-        SimpleDateFormat MonthandDay = new SimpleDateFormat("MM-dd HH:mm");
-        datewithFilter = MonthandDay.format(diary.getDate());
-
-        viewHolder.dateView.setText(datewithFilter);
     }
 
     @Override
@@ -135,18 +127,21 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         View diaryView;
         TextView titleView;
         TextView contentClippingView;
-        TextView dateView;
+        TextView dateViewFirst;
+        TextView dateViewLast;
         Button priorityButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleView =  itemView.findViewById(R.id.showing_diary_title);
-            contentClippingView =  itemView.findViewById(R.id.showing_diary_content_clipping);
-            dateView =  itemView.findViewById(R.id.showing_diary_deadline);
+            titleView = itemView.findViewById(R.id.showing_diary_title);
+            contentClippingView = itemView.findViewById(R.id.showing_diary_content_clipping);
+            dateViewFirst = itemView.findViewById(R.id.showing_diary_deadline_first);
+            dateViewLast = itemView.findViewById(R.id.showing_diary_deadline_last);
             priorityButton = itemView.findViewById(R.id.showing_diary_priority);
             diaryView = itemView;
         }
     }
+
     private ArrayList<String> createNumbers() {
         ArrayList<String> nums = new ArrayList<>();
         for (int i = 1; i <= 5; i++) {

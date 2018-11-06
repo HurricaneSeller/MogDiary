@@ -9,9 +9,46 @@ public class Diary extends LitePalSupport implements Serializable {
     private int Id;
     private String title;
     private String content;
-    private Date date;
     private boolean hasClock;
     private String priority;
+    private String hour;
+    private String minute;
+    private String day;
+    private String month;
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public String getMinute() {
+        return minute;
+    }
+
+    public void setMinute(String minute) {
+        this.minute = minute;
+    }
 
     public boolean isHasClock() {
         return hasClock;
@@ -53,11 +90,4 @@ public class Diary extends LitePalSupport implements Serializable {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 }

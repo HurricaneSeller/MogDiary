@@ -24,39 +24,59 @@
 
             <EditText
                 andorid:id="@+id/month"
-                andorid:layout_width="70dp"
+                andorid:layout_width="60dp"
                 andorid:hint="month"
                 andorid:layout_height="wrap_content"
                 andorid:layout_margin="5dp"
+                andorid:inputType="number"
                 andorid:textColor="#fff"
                 andorid:gravity="center" />
+            <TextView
+                andorid:layout_width="wrap_content"
+                andorid:layout_height="wrap_content"
+                andorid:text="月"/>
 
             <EditText
                 andorid:id="@+id/day"
-                andorid:layout_width="70dp"
+                andorid:layout_width="60dp"
                 andorid:hint="day"
                 andorid:layout_height="wrap_content"
+                andorid:inputType="number"
                 andorid:layout_margin="5dp"
                 andorid:textColor="#fff"
                 andorid:gravity="center" />
+            <TextView
+                andorid:layout_width="wrap_content"
+                andorid:layout_height="wrap_content"
+                andorid:text="日"/>
 
             <EditText
                 andorid:id="@+id/hour"
-                andorid:layout_width="70dp"
+                andorid:layout_width="60dp"
                 andorid:layout_height="wrap_content"
                 andorid:hint="hour"
+                andorid:inputType="number"
                 andorid:layout_margin="5dp"
                 andorid:textColor="#fff"
                 andorid:gravity="center" />
+            <TextView
+                andorid:layout_width="wrap_content"
+                andorid:layout_height="wrap_content"
+                andorid:text="时"/>
 
             <EditText
                 andorid:id="@+id/minute"
-                andorid:layout_width="70dp"
+                andorid:layout_width="60dp"
                 andorid:layout_height="wrap_content"
                 andorid:layout_margin="5dp"
                 andorid:textColor="#fff"
+                andorid:inputType="number"
                 andorid:hint="minute"
                 andorid:gravity="center" />
+            <TextView
+                andorid:layout_width="wrap_content"
+                andorid:layout_height="wrap_content"
+                andorid:text="分"/>
         </LinearLayout>
 
         <Button

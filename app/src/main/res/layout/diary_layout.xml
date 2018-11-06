@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:andorid="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     andorid:layout_width="match_parent"
     andorid:layout_height="100dp"
-    xmlns:tools="http://schemas.android.com/tools"
     andorid:orientation="horizontal"
     app:cardBackgroundColor="#f0fff0"
     app:cardCornerRadius="30sp"
@@ -16,43 +16,56 @@
         <TextView
             andorid:id="@+id/showing_diary_title"
             andorid:layout_width="250dp"
-            andorid:layout_alignParentRight="true"
-            tools:text="很多哦开发健康撒娇发；老师凤凰城解决；参考刘德华va；参加爱吃；的时间"
             andorid:layout_height="50dp"
-            andorid:ellipsize="end"
             andorid:layout_alignParentTop="true"
+            andorid:layout_alignParentRight="true"
+            andorid:ellipsize="end"
             andorid:textColor="@color/colorPrimaryDark"
-            andorid:textSize="20dp" />
+            andorid:textSize="20dp"
+            tools:text="很多哦开发健康撒娇发；老师凤凰城解决；参考刘德华va；参加爱吃；的时间" />
 
         <TextView
             andorid:id="@+id/showing_diary_content_clipping"
             andorid:layout_width="250dp"
-            andorid:layout_alignParentRight="true"
-            andorid:ellipsize="end"
-            tools:text="快来是的骄傲了符合撒了卡；发哈了附近；偶"
             andorid:layout_height="20dp"
             andorid:layout_below="@id/showing_diary_title"
+            andorid:layout_alignParentRight="true"
+            andorid:ellipsize="end"
             andorid:textColor="@color/colorPrimaryDark"
-            andorid:textSize="15dp" />
+            andorid:textSize="15dp"
+            tools:text="快来是的骄傲了符合撒了卡；发哈了附近；偶" />
+
         <Button
             andorid:id="@+id/showing_diary_priority"
+            andorid:layout_width="25dp"
+            andorid:layout_height="25dp"
+            andorid:layout_alignParentLeft="true"
             andorid:layout_centerVertical="true"
             andorid:background="@drawable/rec"
-            andorid:layout_alignParentLeft="true"
-            andorid:layout_width="25dp"
-            andorid:text="5"
             andorid:gravity="center"
-            andorid:textStyle="bold"
+            andorid:text="5"
             andorid:textSize="18dp"
-            andorid:layout_height="25dp" />
+            andorid:textStyle="bold" />
     </RelativeLayout>
 
-    <TextView
-        andorid:id="@+id/showing_diary_deadline"
-        andorid:layout_width="60dp"
-        andorid:layout_height="60dp"
-        tools:text="22222222"
+    <LinearLayout
         andorid:layout_gravity="right|center"
-        andorid:gravity="center"
-        andorid:textSize="20dp" />
+        andorid:layout_width="wrap_content"
+        andorid:layout_height="wrap_content"
+        andorid:orientation="vertical">
+        <TextView
+            andorid:id="@+id/showing_diary_deadline_first"
+            andorid:layout_width="80dp"
+            andorid:layout_height="wrap_content"
+            andorid:gravity="center"
+            andorid:textSize="18dp"
+            tools:text="12月25日" />
+        <TextView
+            andorid:id="@+id/showing_diary_deadline_last"
+            andorid:layout_width="80dp"
+            andorid:layout_height="wrap_content"
+            andorid:gravity="center"
+            andorid:textSize="18dp"
+            tools:text="23点56分"/>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

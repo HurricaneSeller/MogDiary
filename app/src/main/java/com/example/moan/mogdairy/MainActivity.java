@@ -63,8 +63,7 @@ public class MainActivity extends BaseActivity {
             actionBar.hide();
         }
 
-        //TODO
-        //make it can be dragged
+        // TODO: 11/6/18 make it can be dragged ;
 
 
         final FloatingActionButton createDiary = findViewById(R.id.create_diary);
@@ -220,16 +219,31 @@ public class MainActivity extends BaseActivity {
                 sortByDate();
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 break;
+            case R.id.nav_sort_by_priority:
+                sortByPriority();
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                break;
+            case R.id.nav_sort_by_deadline:
+                sortByDeadline();
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                break;
         }
 
     }
 
     private void sortByPriority() {
-        // TODO: 11/5/18 make it
+        diaryList.clear();
+        List<Diary> diaries = LitePal.order("priority asc").find(Diary.class);
+        diaryList.addAll(diaries);
+        diaryAdapter.notifyDataSetChanged();
     }
 
     private void sortByDeadline() {
-        // TODO: 11/5/18 make it
+        diaryList.clear();
+        List<Diary> diaries = LitePal.order("day asc").find(Diary.class);
+        // TODO: 11/6/18 order correctly ;
+        diaryList.addAll(diaries);
+        diaryAdapter.notifyDataSetChanged();
     }
 
     private void sortByDictionary() {
@@ -245,7 +259,6 @@ public class MainActivity extends BaseActivity {
         diaryList.addAll(diaries);
         diaryAdapter.notifyDataSetChanged();
     }
-
     private void deleteDiary(int id) {
         LitePal.delete(Diary.class, id);
     }

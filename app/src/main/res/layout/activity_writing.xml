@@ -17,6 +17,8 @@
 
             <include layout="@layout/diarycard_layout" />
 
+            <include layout="@layout/deadline_layout" />
+
             <EditText
                 android:id="@+id/writing_diary_title"
                 android:layout_width="match_parent"
@@ -32,15 +34,16 @@
                 android:id="@+id/writing_diary_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="250dp"
                 android:layout_below="@id/writing_diary_title"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
                 android:background="@null"
                 android:gravity="top"
-                android:hint="write what you like" />
+                android:hint="write what you like"
+                android:minHeight="250dp" />
         </LinearLayout>
     </ScrollView>
+
     <include layout="@layout/floatingbutton_layout" />
 </android.support.design.widget.CoordinatorLayout>
