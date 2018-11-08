@@ -227,6 +227,10 @@ public class MainActivity extends BaseActivity {
                 sortByDeadline();
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 break;
+            case R.id.nav_sort_by_whether_done:
+                findUndone();
+                drawerLayout.closeDrawer(Gravity.LEFT);
+                break;
         }
 
     }
@@ -248,6 +252,13 @@ public class MainActivity extends BaseActivity {
     private void sortByDictionary() {
         diaryList.clear();
         List<Diary> diaries = LitePal.order("title asc").find(Diary.class);
+        diaryList.addAll(diaries);
+        diaryAdapter.notifyDataSetChanged();
+    }
+
+    private void findUndone(){
+        diaryList.clear();
+        List<Diary> diaries = LitePal.where("isDone = ?", "0").find(Diary.class);
         diaryList.addAll(diaries);
         diaryAdapter.notifyDataSetChanged();
     }

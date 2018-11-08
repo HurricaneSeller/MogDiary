@@ -41,7 +41,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+
 // TODO: 11/6/18 cancle the clock ;
+
 public class WritingActivity extends BaseActivity {
     private static final int SAVE_WITHOUT_SET_CLOCK = 0;
     private static final int SAVE_WITH_CLOCK = 2;
@@ -137,6 +139,9 @@ public class WritingActivity extends BaseActivity {
                         break;
                     case DiaryAdapter.WHERE:
                         updateDiaryContent();
+                        if (savedClock == SAVE_WITH_CLOCK) {
+                           updateDiaryClock();
+                        }
                         Toast.makeText(WritingActivity.this, "Change saved !",
                                 Toast.LENGTH_SHORT).show();
                         break;
@@ -227,6 +232,7 @@ public class WritingActivity extends BaseActivity {
                         } else {
                             setClock(mMonth, mDay, mHour, mMinute);
                             hasClock = true;
+                            savedClock = SAVE_WITH_CLOCK;
                         }
 
                     }
@@ -240,9 +246,6 @@ public class WritingActivity extends BaseActivity {
     }
 
     // TODO: 11/8/18
-    private void changeDDL() {
-
-    }
 
     private void cancleDDL() {
         manager.cancel(pendingClockIntent);
@@ -382,12 +385,20 @@ public class WritingActivity extends BaseActivity {
         diary.update(diaryId);
     }
 
+    private void updateDiaryClock() {
+        Diary diary = new Diary();
+        diary.setMonth(mMonth);
+        diary.setHasClock(hasClock);
+        diary.setHour(mHour);
+        diary.setDay(mDay);
+        diary.setMinute(mMinute);
+        diary.update(diaryId);
+    }
+
     private void saveDiary() {
         String diarytitle = diaryTitle.getText().toString();
         String diarycontent = diaryContent.getText().toString();
-        if (savedClock == 1) {
-            Toast.makeText(this, "your clock haven't been saved yet", Toast.LENGTH_SHORT).show();
-        }
+
         Diary diary = new Diary();
         diary.setTitle(diarytitle);
         diary.setContent(diarycontent);

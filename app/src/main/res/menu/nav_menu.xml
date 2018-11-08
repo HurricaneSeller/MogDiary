@@ -26,6 +26,9 @@
             <item
                 android:id="@+id/nav_sort_by_deadline"
                 android:title="by deadline"/>
+            <item
+                android:id="@+id/nav_sort_by_whether_done"
+                android:title="to be done"/>
         </menu>
     </item>
     <!--</menu>-->
