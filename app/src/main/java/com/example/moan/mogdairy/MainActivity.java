@@ -138,10 +138,10 @@ public class MainActivity extends BaseActivity {
                         .setAction("DONE !", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Log.d("moanbigking","0000");
+                                Log.d("moanbigking", "0000");
                                 Diary diary = (Diary) diaryList.get(viewHolder.getAdapterPosition());
                                 diary.setDone(true);
-                                Log.d("moanbigking","1111");
+                                Log.d("moanbigking", "1111");
                                 diary.update(diaryList.get(viewHolder.getAdapterPosition()).getId());
                                 diaryAdapter.notifyDataSetChanged();
                             }
@@ -244,7 +244,7 @@ public class MainActivity extends BaseActivity {
 
     private void sortByDeadline() {
         diaryList.clear();
-        List<Diary> diaries1 = LitePal.where("hasClock = ? ","1").find(Diary.class);
+        List<Diary> diaries1 = LitePal.where("hasClock = ? ", "1").find(Diary.class);
         diaryList.addAll(diaries1);
         diaryAdapter.notifyDataSetChanged();
     }
@@ -256,7 +256,7 @@ public class MainActivity extends BaseActivity {
         diaryAdapter.notifyDataSetChanged();
     }
 
-    private void findUndone(){
+    private void findUndone() {
         diaryList.clear();
         List<Diary> diaries = LitePal.where("isDone = ?", "0").find(Diary.class);
         diaryList.addAll(diaries);

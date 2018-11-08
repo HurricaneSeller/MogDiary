@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -127,7 +128,6 @@ public class WritingActivity extends BaseActivity {
         final FloatingActionButton musicStop = findViewById(R.id.floating_stop);
 
 
-
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +140,7 @@ public class WritingActivity extends BaseActivity {
                     case DiaryAdapter.WHERE:
                         updateDiaryContent();
                         if (savedClock == SAVE_WITH_CLOCK) {
-                           updateDiaryClock();
+                            updateDiaryClock();
                         }
                         Toast.makeText(WritingActivity.this, "Change saved !",
                                 Toast.LENGTH_SHORT).show();
@@ -215,31 +215,31 @@ public class WritingActivity extends BaseActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(WritingActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, final int month, int dayOfMonth) {
-                mYear = year;
-                mMonth = month;
-                mDay = dayOfMonth;
-                TimePickerDialog timePickerDialog = new TimePickerDialog(WritingActivity.this,
-                        android.app.AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mHour = hourOfDay;
-                        mMinute = minute;
-                        if (mHour < system_hour && mMinute < system_minute) {
-                            Toast.makeText(WritingActivity.this, "invalid time !",
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            setClock(mMonth, mDay, mHour, mMinute);
-                            hasClock = true;
-                            savedClock = SAVE_WITH_CLOCK;
-                        }
+                    public void onDateSet(DatePicker view, int year, final int month, int dayOfMonth) {
+                        mYear = year;
+                        mMonth = month;
+                        mDay = dayOfMonth;
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(WritingActivity.this,
+                                android.app.AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                mHour = hourOfDay;
+                                mMinute = minute;
+                                if (mHour < system_hour && mMinute < system_minute) {
+                                    Toast.makeText(WritingActivity.this, "invalid time !",
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    setClock(mMonth, mDay, mHour, mMinute);
+                                    hasClock = true;
+                                    savedClock = SAVE_WITH_CLOCK;
+                                }
 
+                            }
+                        }, system_hour, system_minute, true);
+                        timePickerDialog.show();
                     }
-                }, system_hour, system_minute, true);
-                timePickerDialog.show();
-            }
-        }, system_year, system_month, system_day);
+                }, system_year, system_month, system_day);
         datePickerDialog.show();
         DatePicker datePicker = datePickerDialog.getDatePicker();
         datePicker.setMinDate(System.currentTimeMillis());
@@ -296,13 +296,14 @@ public class WritingActivity extends BaseActivity {
             String temp = GET_WEATHER_HEAD + MainActivity.defaultLocation + GET_WEATHER_TAIL;
             HttpUtil.sendOkHttpRequest(temp, new Callback() {
                 @Override
-                public void onFailure(Call call, IOException e) {
+                public void onFailure(@NonNull Call call, IOException e) {
                     e.printStackTrace();
                     Toast.makeText(WritingActivity.this, "connection failed", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
-                public void onResponse(Call call, Response response) throws IOException {
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    assert response.body() != null;
                     String responsedata = response.body().string();
                     showResponse(responsedata);
                 }
@@ -337,12 +338,12 @@ public class WritingActivity extends BaseActivity {
     private void loadingPic() {
         HttpUtil.sendOkHttpRequest(GET_BING_PIC, new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 final String bingPic = response.body().string();
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(WritingActivity.this)
                         .edit();
@@ -405,7 +406,6 @@ public class WritingActivity extends BaseActivity {
         diary.setPriority(priority);
         diary.setHasClock(hasClock);
         diary.setDone(isDone);
-        Log.d("moanbigking", String.valueOf(hasClock));
         if (hasClock) {
             Log.d("moanbigking", "here");
             diary.setMonth(mMonth);

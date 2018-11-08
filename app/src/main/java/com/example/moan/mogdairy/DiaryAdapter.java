@@ -148,7 +148,8 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
                 } else {
                     viewHolder.dateViewFirst.setText("");
                     viewHolder.dateViewLast.setText("");
-                }viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(WITHOUT_CLOCK_COLOR));
+                }
+                viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(WITHOUT_CLOCK_COLOR));
             }
         }
 

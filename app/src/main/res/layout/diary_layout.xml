@@ -5,14 +5,15 @@
     andorid:id="@+id/showing_diary_card_view"
     andorid:layout_width="match_parent"
     andorid:layout_height="100dp"
+    andorid:layout_margin="5dp"
     andorid:orientation="horizontal"
     app:cardBackgroundColor="#f0fff0"
-    app:cardCornerRadius="30sp"
-    andorid:layout_margin="5dp">
+    app:cardCornerRadius="30sp">
 
     <RelativeLayout
         andorid:layout_width="280dp"
         andorid:layout_height="match_parent">
+
         <TextView
             andorid:id="@+id/showing_diary_title"
             andorid:layout_width="250dp"
@@ -41,19 +42,20 @@
             andorid:layout_height="25dp"
             andorid:layout_alignParentLeft="true"
             andorid:layout_centerVertical="true"
+            andorid:layout_marginLeft="2dp"
             andorid:background="@drawable/rec"
             andorid:gravity="center"
-            andorid:layout_marginLeft="2dp"
             andorid:text="5"
             andorid:textSize="18dp"
             andorid:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
-        andorid:layout_gravity="right|center"
         andorid:layout_width="wrap_content"
         andorid:layout_height="wrap_content"
+        andorid:layout_gravity="right|center"
         andorid:orientation="vertical">
+
         <TextView
             andorid:id="@+id/showing_diary_deadline_first"
             andorid:layout_width="80dp"
@@ -61,12 +63,13 @@
             andorid:gravity="center"
             andorid:textSize="18dp"
             tools:text="12月25日" />
+
         <TextView
             andorid:id="@+id/showing_diary_deadline_last"
             andorid:layout_width="80dp"
             andorid:layout_height="wrap_content"
             andorid:gravity="center"
             andorid:textSize="18dp"
-            tools:text="23点56分"/>
+            tools:text="23点56分" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

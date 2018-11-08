@@ -21,7 +21,7 @@ public class RingReceiver extends BroadcastReceiver {
                 false,
                 true,
                 5);
-        Log.d("moanbigking",intent.getStringExtra("clock_title"));
+        Log.d("moanbigking", intent.getStringExtra("clock_title"));
     }
 
 }
