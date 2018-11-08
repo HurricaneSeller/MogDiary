@@ -15,6 +15,15 @@ public class Diary extends LitePalSupport implements Serializable {
     private int day;
     private int month;
     private long total;
+    private boolean isDone;
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
 
     public long getTotal() {
         return total;

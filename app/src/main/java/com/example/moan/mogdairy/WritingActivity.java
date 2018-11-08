@@ -49,7 +49,7 @@ public class WritingActivity extends BaseActivity {
             "key=nyjys9yz0fta6rqj&location=";
     public static final String GET_WEATHER_TAIL = "&language=zh-Hans&unit=c";
     public static final String GET_BING_PIC = "http://guolin.tech/api/bing_pic";
-
+    private static final boolean isDone = false;
 
     private EditText diaryTitle;
     private EditText diaryContent;
@@ -393,6 +393,7 @@ public class WritingActivity extends BaseActivity {
         diary.setContent(diarycontent);
         diary.setPriority(priority);
         diary.setHasClock(hasClock);
+        diary.setDone(isDone);
         Log.d("moanbigking", String.valueOf(hasClock));
         if (hasClock) {
             Log.d("moanbigking", "here");

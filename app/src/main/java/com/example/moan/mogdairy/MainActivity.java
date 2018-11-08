@@ -133,16 +133,17 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
 
-                Snackbar.make(recyclerView, "Delete Diary ?", Snackbar.LENGTH_LONG)
+                Snackbar.make(recyclerView, "DONE ?", Snackbar.LENGTH_LONG)
                         .setActionTextColor(Color.parseColor("#2e8b57"))
-                        .setAction("DELETE", new View.OnClickListener() {
+                        .setAction("DONE !", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                deleteDiary((diaryList.get(viewHolder.getAdapterPosition())).getId());
-                                diaryList.remove(viewHolder.getAdapterPosition());
-                                //diaryAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                                diaryAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                                diaryAdapter.notifyItemRangeChanged(0, diaryList.size());
+                                Log.d("moanbigking","0000");
+                                Diary diary = (Diary) diaryList.get(viewHolder.getAdapterPosition());
+                                diary.setDone(true);
+                                Log.d("moanbigking","1111");
+                                diary.update(diaryList.get(viewHolder.getAdapterPosition()).getId());
+                                diaryAdapter.notifyDataSetChanged();
                             }
                         })
                         .show();

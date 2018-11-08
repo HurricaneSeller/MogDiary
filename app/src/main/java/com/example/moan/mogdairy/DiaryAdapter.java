@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wx.wheelview.widget.WheelViewDialog;
 
@@ -26,11 +25,14 @@ import java.util.List;
  * with a clock it change background color
  * */
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> {
+    private static final String DONE_COLOR = "#808080";
+    private static final String WITHOUT_CLOCK_COLOR = "#f0fff0";
+    private static final String WITH_CLOCK_COLOR = "#ffe4e1";
     private List<Diary> diaryList;
     private Context mContext;
-    public static final int WHERE = 0;
+    static final int WHERE = 0;
 
-    public DiaryAdapter(List<Diary> myDiaryList) {
+    DiaryAdapter(List<Diary> myDiaryList) {
         diaryList = myDiaryList;
     }
 
@@ -111,33 +113,48 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.ViewHolder> 
         viewHolder.contentClippingView.setText(diary.getContent());
         viewHolder.priorityButton.setText(diary.getPriority());
 
-        if (diary.isHasClock()) {
-            int dueMonth = diary.getMonth();
-            int dueDay = diary.getDay();
-            int dueHour = diary.getHour();
-            int dueMinute = diary.getMinute();
-            long total = diary.getTotal();
 
-            Calendar calendar = Calendar.getInstance();
-            int systemMonth = calendar.get(Calendar.MONTH);
-            int systemDay = calendar.get(Calendar.DAY_OF_MONTH);
-            int systemHour = calendar.get(Calendar.HOUR_OF_DAY);
-            int systemMinute = calendar.get(Calendar.MINUTE);
+        int dueMonth = diary.getMonth();
+        int dueDay = diary.getDay();
+        int dueHour = diary.getHour();
+        int dueMinute = diary.getMinute();
+        long total = diary.getTotal();
 
-            long system_total = systemMonth * 43200 + systemDay * 1440 + systemHour * 60 + systemMinute;
-
-            viewHolder.dateViewFirst.setText(dueMonth + "月" + dueDay + "日");
-            viewHolder.dateViewLast.setText(dueHour + "时" + dueMinute + "分");
-            if (system_total >= total) {
-                viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor("#ffe4e1"));
-            }
+        if (diary.isDone()) {
+            viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(DONE_COLOR));
         } else {
-            viewHolder.dateViewFirst.setText("");
-            viewHolder.dateViewLast.setText("");
-            viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor("#f0fff0"));
+            if (diary.isHasClock()) {
+
+                Calendar calendar = Calendar.getInstance();
+                int systemMonth = calendar.get(Calendar.MONTH);
+                int systemDay = calendar.get(Calendar.DAY_OF_MONTH);
+                int systemHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int systemMinute = calendar.get(Calendar.MINUTE);
+
+                long system_total = systemMonth * 43200 + systemDay * 1440 + systemHour * 60 + systemMinute;
+
+                viewHolder.dateViewFirst.setText(dueMonth + "月" + dueDay + "日");
+                viewHolder.dateViewLast.setText(dueHour + "时" + dueMinute + "分");
+                if (system_total >= total) {
+                    viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(WITH_CLOCK_COLOR));
+                } else {
+                    viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(WITHOUT_CLOCK_COLOR));
+                }
+            } else {
+
+                if (diary.isHasClock()) {
+                    viewHolder.dateViewFirst.setText(dueMonth + "月" + dueDay + "日");
+                    viewHolder.dateViewLast.setText(dueHour + "时" + dueMinute + "分");
+                } else {
+                    viewHolder.dateViewFirst.setText("");
+                    viewHolder.dateViewLast.setText("");
+                }viewHolder.diaryCardView.setCardBackgroundColor(Color.parseColor(WITHOUT_CLOCK_COLOR));
+            }
         }
 
+
     }
+
 
     @Override
     public int getItemCount() {
