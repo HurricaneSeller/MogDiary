@@ -11,7 +11,6 @@ public class RingReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("moanbigking","clockheard");
         ShowNotification showNotification = new ShowNotification(context,
                 "Time up",
                 intent.getStringExtra("clock_title"),
@@ -24,4 +23,5 @@ public class RingReceiver extends BroadcastReceiver {
                 5);
         Log.d("moanbigking",intent.getStringExtra("clock_title"));
     }
+
 }

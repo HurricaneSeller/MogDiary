@@ -1,5 +1,6 @@
 package com.example.moan.mogdairy;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -44,7 +45,7 @@ public class MainActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    public static DiaryAdapter diaryAdapter;
+    private DiaryAdapter diaryAdapter;
 
     @Override
     protected void onResume() {
@@ -238,9 +239,8 @@ public class MainActivity extends BaseActivity {
 
     private void sortByDeadline() {
         diaryList.clear();
-        List<Diary> diaries = LitePal.order("total asc").find(Diary.class);
-        // TODO: 11/6/18 order correctly ;
-        diaryList.addAll(diaries);
+        List<Diary> diaries1 = LitePal.where("hasClock = ? ","1").find(Diary.class);
+        diaryList.addAll(diaries1);
         diaryAdapter.notifyDataSetChanged();
     }
 

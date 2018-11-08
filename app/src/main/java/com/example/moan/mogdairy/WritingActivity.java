@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -42,6 +43,14 @@ import okhttp3.Response;
 
 // TODO: 11/6/18 cancle the clock ;
 public class WritingActivity extends BaseActivity {
+    private static final int SAVE_WITHOUT_SET_CLOCK = 0;
+    private static final int SAVE_WITH_CLOCK = 2;
+    public static final String GET_WEATHER_HEAD = "https://api.seniverse.com/v3/weather/now.json?" +
+            "key=nyjys9yz0fta6rqj&location=";
+    public static final String GET_WEATHER_TAIL = "&language=zh-Hans&unit=c";
+    public static final String GET_BING_PIC = "http://guolin.tech/api/bing_pic";
+
+
     private EditText diaryTitle;
     private EditText diaryContent;
 
@@ -53,18 +62,10 @@ public class WritingActivity extends BaseActivity {
     private TextView dailyQuoteView;
 
     private String priority;
-
     private int diaryId;
 
     private static boolean isWeatherInfoShowing = false;
-    private static boolean isDeadlineViewShowing = false;
-    private boolean visiableCard = false;
-
-    //    private final String getWeather = "https://api.seniverse.com/v3/weather/now.json?key=nyjys9yz0fta6rqj&location=jingmen&language=zh-Hans&unit=c";
-    public static final String getWeatherHead = "https://api.seniverse.com/v3/weather/now.json?" +
-            "key=nyjys9yz0fta6rqj&location=";
-    public static final String getWeatherTail = "&language=zh-Hans&unit=c";
-    public final String getBingPic = "http://guolin.tech/api/bing_pic";
+    private static boolean visiableCard = false;
 
     private static int musicFlag = 1;
     private static int isPlaying = 2;
@@ -75,7 +76,7 @@ public class WritingActivity extends BaseActivity {
      * change to 1 -> the user foget to start the clock ;
      * change to 2 -> best done ;
      */
-    private int savedClock = 0;
+    private int savedClock = SAVE_WITHOUT_SET_CLOCK;
 
 
     private static int mYear;
@@ -89,6 +90,8 @@ public class WritingActivity extends BaseActivity {
     private static int system_day;
     private static int system_hour;
     private static int system_minute;
+    private AlarmManager manager;
+    private PendingIntent pendingClockIntent;
 
 
     @Override
@@ -112,7 +115,6 @@ public class WritingActivity extends BaseActivity {
             diaryId = diary.getId();
         }
 
-        // TODO: 11/5/18 let the main & music more flexible
         final FloatingActionMenu main = findViewById(R.id.floating_main);
         final FloatingActionMenu music = findViewById(R.id.floating_music);
         final FloatingActionButton save = findViewById(R.id.floating_save);
@@ -121,6 +123,7 @@ public class WritingActivity extends BaseActivity {
         final FloatingActionButton cloud = findViewById(R.id.floating_cloud);
         final FloatingActionButton musicStart = findViewById(R.id.floating_start);
         final FloatingActionButton musicStop = findViewById(R.id.floating_stop);
+
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +160,7 @@ public class WritingActivity extends BaseActivity {
                 setDDL();
             }
         });
+
         cloud.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +208,8 @@ public class WritingActivity extends BaseActivity {
         system_hour = calendar.get(Calendar.HOUR_OF_DAY);
         system_minute = calendar.get(Calendar.MINUTE);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(WritingActivity.this, new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(WritingActivity.this,
+                new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, final int month, int dayOfMonth) {
                 mYear = year;
@@ -234,6 +239,15 @@ public class WritingActivity extends BaseActivity {
         datePicker.setMinDate(System.currentTimeMillis());
     }
 
+    // TODO: 11/8/18
+    private void changeDDL() {
+
+    }
+
+    private void cancleDDL() {
+        manager.cancel(pendingClockIntent);
+    }
+
     private void initView() {
         diaryTitle = findViewById(R.id.writing_diary_title);
         diaryContent = findViewById(R.id.writing_diary_content);
@@ -248,11 +262,11 @@ public class WritingActivity extends BaseActivity {
 
 
     private void setClock(int month, int day, int hour, int minute) {
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent clockIntent = new Intent(WritingActivity.this, RingReceiver.class);
         clockIntent.putExtra("clock_title", diaryTitle.getText().toString());
-        Log.d("moanbigking",diaryTitle.getText().toString());
-        PendingIntent pendingClockIntent = PendingIntent.getBroadcast(WritingActivity.this,
+        Log.d("moanbigking", diaryTitle.getText().toString());
+        pendingClockIntent = PendingIntent.getBroadcast(WritingActivity.this,
                 0, clockIntent, 0);
 
         Calendar clockCalendar = Calendar.getInstance();
@@ -276,7 +290,7 @@ public class WritingActivity extends BaseActivity {
             weatherCardView.setVisibility(View.GONE);
         } else {
             weatherCardView.setVisibility(View.VISIBLE);
-            String temp = getWeatherHead + MainActivity.defaultLocation + getWeatherTail;
+            String temp = GET_WEATHER_HEAD + MainActivity.defaultLocation + GET_WEATHER_TAIL;
             HttpUtil.sendOkHttpRequest(temp, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -318,7 +332,7 @@ public class WritingActivity extends BaseActivity {
     }
 
     private void loadingPic() {
-        HttpUtil.sendOkHttpRequest(getBingPic, new Callback() {
+        HttpUtil.sendOkHttpRequest(GET_BING_PIC, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
