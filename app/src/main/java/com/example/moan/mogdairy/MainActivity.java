@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity {
 
 
         final FloatingActionButton createDiary = findViewById(R.id.create_diary);
+        createDiary.setBackgroundColor(Color.parseColor("#3d9f69"));
+
 
         drawerLayout = findViewById(R.id.drawerlayout);
 
@@ -76,7 +78,6 @@ public class MainActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         diaryAdapter = new DiaryAdapter(diaryList);
         recyclerView.setAdapter(diaryAdapter);
-        recyclerView.addItemDecoration(new SpaceItemDecration(space));
 
 
         navigationView = findViewById(R.id.nav);

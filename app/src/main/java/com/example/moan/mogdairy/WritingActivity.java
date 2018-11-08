@@ -1,21 +1,26 @@
 package com.example.moan.mogdairy;
 
 import android.app.AlarmManager;
+import android.app.DatePickerDialog;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -47,12 +52,6 @@ public class WritingActivity extends BaseActivity {
     private TextView dailyLocationView;
     private TextView dailyQuoteView;
 
-    private EditText ddlMonthView;
-    private EditText ddlDayView;
-    private EditText ddlHourView;
-    private EditText ddlMinuteView;
-    private CardView deadlineCardView;
-
     private String priority;
 
     private int diaryId;
@@ -71,22 +70,26 @@ public class WritingActivity extends BaseActivity {
     private static int isPlaying = 2;
     private boolean hasClock = false;
 
-    private AlarmManager manager;
-
-    /*
-     *
-     *  default 0 -> the user never click the clock button ;
-     *  change to 1 -> the user foget to start the clock ;
-     *  change to 2 -> best done ;
-     *
-     *
+    /**
+     * default 0 -> the user never click the clock button ;
+     * change to 1 -> the user foget to start the clock ;
+     * change to 2 -> best done ;
      */
     private int savedClock = 0;
 
-    private static int month;
-    private static int day;
-    private static int hour;
-    private static int minute;
+
+    private static int mYear;
+    private static int mMonth;
+    private static int mDay;
+    private static int mHour;
+    private static int mMinute;
+
+    private static int system_year;
+    private static int system_month;
+    private static int system_day;
+    private static int system_hour;
+    private static int system_minute;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -107,13 +110,6 @@ public class WritingActivity extends BaseActivity {
             diaryTitle.setText(diary.getTitle());
             diaryContent.setText(diary.getContent());
             diaryId = diary.getId();
-            if (diary.isHasClock()) {
-                setUnfocusable();
-                ddlMonthView.setText(diary.getMonth());
-                ddlHourView.setText(diary.getHour());
-                ddlDayView.setText(diary.getDay());
-                ddlMinuteView.setText(diary.getMinute());
-            }
         }
 
         // TODO: 11/5/18 let the main & music more flexible
@@ -155,16 +151,10 @@ public class WritingActivity extends BaseActivity {
             }
         });
         clock.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if (!isDeadlineViewShowing) {
-                    deadlineCardView.setVisibility(View.VISIBLE);
-                } else {
-                    deadlineCardView.setVisibility(View.GONE);
-                }
-                isDeadlineViewShowing = !isDeadlineViewShowing;
-                savedClock = 1;
-                setDeadline();
+                setDDL();
             }
         });
         cloud.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +195,45 @@ public class WritingActivity extends BaseActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setDDL() {
+        Calendar calendar = Calendar.getInstance();
+        system_year = calendar.get(Calendar.YEAR);
+        system_month = calendar.get(Calendar.MONTH);
+        system_day = calendar.get(Calendar.DAY_OF_MONTH);
+        system_hour = calendar.get(Calendar.HOUR_OF_DAY);
+        system_minute = calendar.get(Calendar.MINUTE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(WritingActivity.this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, final int month, int dayOfMonth) {
+                mYear = year;
+                mMonth = month;
+                mDay = dayOfMonth;
+                TimePickerDialog timePickerDialog = new TimePickerDialog(WritingActivity.this,
+                        android.app.AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+                        if (mHour < system_hour && mMinute < system_minute) {
+                            Toast.makeText(WritingActivity.this, "invalid time !",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            setClock(mMonth, mDay, mHour, mMinute);
+                            hasClock = true;
+                        }
+
+                    }
+                }, system_hour, system_minute, true);
+                timePickerDialog.show();
+            }
+        }, system_year, system_month, system_day);
+        datePickerDialog.show();
+        DatePicker datePicker = datePickerDialog.getDatePicker();
+        datePicker.setMinDate(System.currentTimeMillis());
+    }
+
     private void initView() {
         diaryTitle = findViewById(R.id.writing_diary_title);
         diaryContent = findViewById(R.id.writing_diary_content);
@@ -215,134 +244,28 @@ public class WritingActivity extends BaseActivity {
         dailyQuoteView = findViewById(R.id.daily_quote);
         weatherCardView = findViewById(R.id.writing_diary_cardview_daily_weather);
 
-        ddlMonthView = findViewById(R.id.month);
-        ddlDayView = findViewById(R.id.day);
-        ddlHourView = findViewById(R.id.hour);
-        ddlMinuteView = findViewById(R.id.minute);
-        deadlineCardView = findViewById(R.id.writing_diary_cardview_choose_deadline);
-    }
-
-
-    private void setDeadline() {
-        final Button setDdl = findViewById(R.id.set);
-        setDdl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                month = Integer.parseInt(ddlMonthView.getText().toString());
-                day = Integer.parseInt(ddlDayView.getText().toString());
-                hour = Integer.parseInt(ddlHourView.getText().toString());
-                minute = Integer.parseInt(ddlMinuteView.getText().toString());
-
-                Calendar calendar = Calendar.getInstance();
-                final int officialMonth = calendar.get(Calendar.MONTH);
-                final int officialDay = calendar.get(Calendar.DAY_OF_MONTH);
-                final int officialHour = calendar.get(Calendar.HOUR_OF_DAY);
-                final int officialMinute = calendar.get(Calendar.MINUTE);
-
-                switch (month) {
-                    case 1:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
-                        if (day <= 31 && day >= 0 && hour <= 23 && hour >= 0 && minute <= 59 &&
-                                minute >= 0) {
-
-                        } else {
-                            clearEditErea();
-                        }
-                        break;
-                    case 4:
-                    case 6:
-                    case 9:
-                    case 11:
-                        if (day <= 30 && day >= 0 && hour <= 23 && hour >= 0 && minute <= 59 &&
-                                minute >= 0) {
-
-                        } else {
-                            clearEditErea();
-                        }
-                        break;
-                    case 2:
-                        if (day <= 28 && day >= 0 && hour <= 23 && hour >= 0 && minute <= 59 &&
-                                minute >= 0) {
-                        } else {
-                            clearEditErea();
-                        }
-                        break;
-                }
-                if (!setCorrect(month, officialMonth, day, officialDay, hour, officialHour,
-                        minute, officialMinute)) {
-                    clearEditErea();
-                } else {
-                    setUnfocusable();
-                    //        updateDiaryClock(month, day, hour, minute);
-                    setClock(month, day, hour, minute);
-                    hasClock = true;
-                    savedClock = 2;
-                }
-            }
-        });
-    }
-
-    private boolean setCorrect(int month, int officialMonth, int day, int officialDay, int hour,
-                               int officialHour, int minute, int officialMinute) {
-
-        if (month < officialMonth) {
-            return false;
-        }
-        if (month == officialMonth) {
-            if (day < officialDay) {
-                return false;
-            }
-            if (day == officialDay) {
-                if (hour < officialHour) {
-                    return false;
-                }
-                if (hour == officialHour) {
-                    return minute >= officialMinute;
-                }
-            }
-        }
-        return true;
     }
 
 
     private void setClock(int month, int day, int hour, int minute) {
-        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent clockIntent = new Intent(WritingActivity.this, RingReceiver.class);
+        clockIntent.putExtra("clock_title", diaryTitle.getText().toString());
+        Log.d("moanbigking",diaryTitle.getText().toString());
         PendingIntent pendingClockIntent = PendingIntent.getBroadcast(WritingActivity.this,
                 0, clockIntent, 0);
 
         Calendar clockCalendar = Calendar.getInstance();
-        clockCalendar.set(Calendar.MONTH, month - 1);
+        clockCalendar.set(Calendar.MONTH, month);
         clockCalendar.set(Calendar.DAY_OF_MONTH, day);
         clockCalendar.set(Calendar.HOUR_OF_DAY, hour);
         clockCalendar.set(Calendar.MINUTE, minute);
+        Log.d("moanbigking", month + "-" + day + "-" + hour + "-" + minute);
         manager.set(AlarmManager.RTC_WAKEUP, clockCalendar.getTimeInMillis(), pendingClockIntent);
         Toast.makeText(this, "the clock will ring at " + month + "月" + day + "日" +
                 hour + "时" + minute + "分", Toast.LENGTH_SHORT).show();
     }
 
-    private void setUnfocusable() {
-        ddlMinuteView.setFocusable(false);
-        ddlHourView.setFocusable(false);
-        ddlDayView.setFocusable(false);
-        ddlMonthView.setFocusable(false);
-
-    }
-
-    private void clearEditErea() {
-        Toast.makeText(WritingActivity.this, "something wrong ?",
-                Toast.LENGTH_SHORT).show();
-        ddlMonthView.setText("");
-        ddlDayView.setText("");
-        ddlHourView.setText("");
-        ddlMinuteView.setText("");
-
-    }
 
     private void getCloudInfo() {
         //get localposition automaticlly
@@ -459,11 +382,11 @@ public class WritingActivity extends BaseActivity {
         Log.d("moanbigking", String.valueOf(hasClock));
         if (hasClock) {
             Log.d("moanbigking", "here");
-            diary.setMonth(month);
-            diary.setDay(day);
-            diary.setHour(hour);
-            diary.setMinute(minute);
-            diary.setTotal(month*43200+day*1440+hour*60+minute);
+            diary.setMonth(mMonth);
+            diary.setDay(mDay);
+            diary.setHour(mHour);
+            diary.setMinute(mMinute);
+            diary.setTotal(mMonth * 43200 + mDay * 1440 + mHour * 60 + mMinute);
         }
         diary.save();
     }

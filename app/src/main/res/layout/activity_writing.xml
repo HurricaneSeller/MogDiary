@@ -17,7 +17,6 @@
 
             <include layout="@layout/diarycard_layout" />
 
-            <include layout="@layout/deadline_layout" />
 
             <EditText
                 android:id="@+id/writing_diary_title"

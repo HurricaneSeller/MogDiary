@@ -7,12 +7,11 @@
     andorid:orientation="horizontal"
     app:cardBackgroundColor="#f0fff0"
     app:cardCornerRadius="30sp"
-    app:contentPadding="10dp">
+    andorid:layout_margin="10dp">
 
     <RelativeLayout
         andorid:layout_width="280dp"
         andorid:layout_height="match_parent">
-
         <TextView
             andorid:id="@+id/showing_diary_title"
             andorid:layout_width="250dp"

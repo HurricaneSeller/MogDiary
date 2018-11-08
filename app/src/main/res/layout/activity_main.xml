@@ -20,8 +20,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/total"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp" />
+                android:layout_height="match_parent" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/create_diary"
